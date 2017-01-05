@@ -7,6 +7,7 @@ use yii\helpers\VarDumper;
 use common\models\Rooms;
 use common\models\Coordinates;
 use common\models\Olxstatistic;
+use common\models\Maxdate;
 use yii\db\Migration;
 use yii\web\Response;
 
@@ -42,6 +43,12 @@ class ParserController extends \yii\web\Controller
     //     code parse colected urls
     public function actionPars()
     {
+     
+
+     // если буду проблемы с цикличностю тогда смотреть в 
+    // найти и разкоментрировать ст298    //$welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
+
+      $_POST['only_new']=true; // для только новых
         if (Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $request = Yii::$app->request;
@@ -274,7 +281,31 @@ class ParserController extends \yii\web\Controller
 
 
 
-                // еще одна проверка в бд на урл
+                // еще одна проверка в бд на max url
+
+$max_date  = Maxdate::find()->andWhere(['site'=>'OLX'])->max('dt');         
+$max_id  = Maxdate::find()->select('max_id')->where(['dt'=>$max_date])->one();
+
+
+// если ид в бд есть больше тогда пропуск 
+ if($max_id->max_id>$site_id && $_POST['only_new']==true ) { 
+
+    //$welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
+    //Yii::$app->session->set('welldone', $welldone);
+                                             
+                $welldone = Yii::$app->session->get('welldone', 0); $res = array(
+
+                    'debugval' => print_r($address, true),
+                    'success' => true,
+                    'stop_timer' => false,
+                    'url' => $path_site['url'],
+                    'welldone' => $welldone,
+                    ); 
+                echo json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+                    JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die(); 
+
+ }
+
 
               //  $count = Rooms::find()->where(['url' => $path_site['url']])->count(); 
                 
@@ -322,17 +353,33 @@ class ParserController extends \yii\web\Controller
                           
                           
                          $contact->count_rooms=$coun_rooms;
-                        $contact->save();
+                         $contact->save();
+
+
+//   дозапись  в таблицу с временем к ид
+  $d_now= strtotime( date("Y-m-d"));       
+
+
+if ($_POST['only_new']==true) {
+  
+      if($d_now> strtotime( $max_date)){
+             $md = new Maxdate();
+             $md->dt= date("Y-m-d");
+             $md->max_id= $site_id;
+              $md->site= 'OLX';
+               $md->save();
+
+            
+       
+      }
+
+}           
+          
+
                         
                          $welldone = Yii::$app->session->get('welldone', 0); ++$welldone;
                         Yii::$app->session->set('welldone', $welldone);
-                        
-                        
-                        
-                        
-                        // }
-                        
-                        
+                                             
                 $welldone = Yii::$app->session->get('welldone', 0); $res = array(
 
                     'debugval' => print_r($address, true),
@@ -340,18 +387,15 @@ class ParserController extends \yii\web\Controller
                     'stop_timer' => false,
                     'url' => $path_site['url'],
                     'welldone' => $welldone,
-                    ); echo json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-                    JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die(); //die();
+                    ); 
+                echo json_encode($res, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
+                    JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); die(); 
+
                 }
             ); // end pars inner
 
 
-  //      } else { // end
-//            echo json_encode(['stop_timer' => true,'debug'=>'else', 'colected' => count(Yii::$app->session->
-//                get('welldone', 0))], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT |
-//                JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-//            die();
-//        }
+
 
 
     }
@@ -473,7 +517,7 @@ public function actionColecturls()
 
             // дозапись в сесию( пока что такой вариант)
             $all_urls = Yii::$app->session->get('all_urls', 0); 
-            $datapage = Yii::$app-> session->get('datapage', 0); 
+            $datapage = Yii::$app->session->get('datapage', 0); 
             
             
      // $datapage = array_merge($datapage, $datapg);

@@ -19,7 +19,7 @@ $this->title = "Rooms";
 $this->params['breadcrumbs'][] = $this->title;
 
 
-//\Yii::info("own: ", var_dump($params,true));
+//\Yii::trace(["own: ", $max_date,'compare'=>$resdt ] );
 
 ?>
 
@@ -55,7 +55,7 @@ echo SideNav::widget([
             'label' => 'К меню',
             'icon' => 'question-sign',
             'items' => [
-                ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>'#'],
+                ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>Url::toRoute('roomstoday/index')],
                    ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
                       ['label' => 'Нашы сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
                          ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>'#'],

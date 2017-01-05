@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
  */
 class RoomsController extends Controller
 {
+    
     /**
      * @inheritdoc
      */
