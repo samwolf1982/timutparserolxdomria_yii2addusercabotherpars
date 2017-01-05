@@ -93,15 +93,6 @@ return array (
       '@kartik/dialog' => $vendorDir . '/kartik-v/yii2-dialog',
     ),
   ),
-  'kartik-v/yii2-grid' => 
-  array (
-    'name' => 'kartik-v/yii2-grid',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid',
-    ),
-  ),
   'yiisoft/yii2-jui' => 
   array (
     'name' => 'yiisoft/yii2-jui',
@@ -145,15 +136,6 @@ return array (
     'alias' => 
     array (
       '@kartik/touchspin' => $vendorDir . '/kartik-v/yii2-widget-touchspin',
-    ),
-  ),
-  'kartik-v/yii2-widget-timepicker' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-timepicker',
-    'version' => '1.0.1.0',
-    'alias' => 
-    array (
-      '@kartik/time' => $vendorDir . '/kartik-v/yii2-widget-timepicker',
     ),
   ),
   'kartik-v/yii2-widget-switchinput' => 
@@ -289,6 +271,52 @@ return array (
     'alias' => 
     array (
       '@kartik/widgets' => $vendorDir . '/kartik-v/yii2-widgets',
+    ),
+  ),
+  'yiisoft/yii2-httpclient' => 
+  array (
+    'name' => 'yiisoft/yii2-httpclient',
+    'version' => '2.0.2.0',
+    'alias' => 
+    array (
+      '@yii/httpclient' => $vendorDir . '/yiisoft/yii2-httpclient',
+    ),
+  ),
+  'yiisoft/yii2-authclient' => 
+  array (
+    'name' => 'yiisoft/yii2-authclient',
+    'version' => '2.1.1.0',
+    'alias' => 
+    array (
+      '@yii/authclient' => $vendorDir . '/yiisoft/yii2-authclient',
+    ),
+  ),
+  'dektrium/yii2-user' => 
+  array (
+    'name' => 'dektrium/yii2-user',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@dektrium/user' => $vendorDir . '/dektrium/yii2-user',
+    ),
+    'bootstrap' => 'dektrium\\user\\Bootstrap',
+  ),
+  'kartik-v/yii2-widget-timepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-timepicker',
+    'version' => '1.0.2.0',
+    'alias' => 
+    array (
+      '@kartik/time' => $vendorDir . '/kartik-v/yii2-widget-timepicker',
+    ),
+  ),
+  'kartik-v/yii2-grid' => 
+  array (
+    'name' => 'kartik-v/yii2-grid',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/grid' => $vendorDir . '/kartik-v/yii2-grid',
     ),
   ),
 );

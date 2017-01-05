@@ -39,6 +39,12 @@ return [
         // message source
         // 'downloadAction' => 'gridview/export/download',
         // 'i18n' => []
+
+
+    ],
+    
+     'user' => [
+        'class' => 'dektrium\user\Module',
     ],
     
     

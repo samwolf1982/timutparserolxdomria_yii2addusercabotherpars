@@ -10,6 +10,8 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+use kartik\sidenav\SideNav;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -28,7 +30,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Доминанта',
+        'brandLabel' => 'Доминанта2',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -59,10 +61,20 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+
+
+
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+
+
+
+
+
+
+
         <?= $content ?>
     </div>
 </div>

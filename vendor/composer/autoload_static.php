@@ -19,11 +19,13 @@ class ComposerStaticInit05b4a16ce3f9fe7b090bbc56abddbe78
         array (
             'yii\\swiftmailer\\' => 16,
             'yii\\jui\\' => 8,
+            'yii\\httpclient\\' => 15,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
             'yii\\composer\\' => 13,
             'yii\\bootstrap\\' => 14,
+            'yii\\authclient\\' => 15,
             'yii\\' => 4,
         ),
         'r' => 
@@ -65,6 +67,7 @@ class ComposerStaticInit05b4a16ce3f9fe7b090bbc56abddbe78
         'd' => 
         array (
             'dmstr\\' => 6,
+            'dektrium\\user\\' => 14,
         ),
         'c' => 
         array (
@@ -120,6 +123,10 @@ class ComposerStaticInit05b4a16ce3f9fe7b090bbc56abddbe78
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-jui',
         ),
+        'yii\\httpclient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-httpclient',
+        ),
         'yii\\gii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-gii',
@@ -139,6 +146,10 @@ class ComposerStaticInit05b4a16ce3f9fe7b090bbc56abddbe78
         'yii\\bootstrap\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-bootstrap',
+        ),
+        'yii\\authclient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-authclient',
         ),
         'yii\\' => 
         array (
@@ -257,6 +268,10 @@ class ComposerStaticInit05b4a16ce3f9fe7b090bbc56abddbe78
         'dmstr\\' => 
         array (
             0 => __DIR__ . '/..' . '/dmstr/yii2-adminlte-asset',
+        ),
+        'dektrium\\user\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dektrium/yii2-user',
         ),
         'cebe\\markdown\\' => 
         array (

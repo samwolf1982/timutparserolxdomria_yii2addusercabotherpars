@@ -23,7 +23,9 @@
         "yiisoft/yii2-jui": "^2.0",
         "kartik-v/yii2-mpdf": "^1.0",
         "kartik-v/yii2-widget-select2": "^2.0",
-        "kartik-v/yii2-widgets": "^3.4"
+        "kartik-v/yii2-widgets": "^3.4",
+        "dektrium/yii2-user": "0.9.*@dev",
+        "kartik-v/yii2-widget-sidenav": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

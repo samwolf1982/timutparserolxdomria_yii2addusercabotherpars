@@ -425,7 +425,7 @@ public function actionColecturls()
                    $all_tmp_urls[] = $t;  
                 // запись в бд для статистики
                 
-                $count = Olxstatistic::find()->where(['fullurl' => $t_full])->count(); 
+                $count = Olxstatistic::find()->select(['id'])->where(['fullurl' => $t_full])->limit(1)->count(); 
                 
                 if ($count == 0) {
                     $contact = new Olxstatistic();

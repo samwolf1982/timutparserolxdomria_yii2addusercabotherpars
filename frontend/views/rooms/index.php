@@ -8,6 +8,8 @@ use yii\widgets\Pjax;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use frontend\models\Rooms;
+
+use kartik\sidenav\SideNav;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RoomsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -20,9 +22,92 @@ $this->params['breadcrumbs'][] = $this->title;
 //\Yii::info("own: ", var_dump($params,true));
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rooms-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
+<!-- Columns are always 50% wide, on mobile and desktop -->
+<div class="row">
+  <div class="col-xs-6">
+           
+         <?php
+echo SideNav::widget([
+    'type' => SideNav::TYPE_DEFAULT,
+    'heading' => 'Меню',
+    'items' => [
+        // [
+        //     'url' => '#',
+        //     'label' => 'Home',
+        //     'icon' => 'home'
+        // ],
+        [
+            'label' => 'К меню',
+            'icon' => 'question-sign',
+            'items' => [
+                ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>'#'],
+                   ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
+                      ['label' => 'Нашы сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
+                         ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>'#'],
+                            ['label' => 'Первоисточник', 'icon'=>'info-sign', 'url'=>'#'],
+               
+            ],
+        ],
+    ],
+]);
+?>
+
+     </div>
+       <div class="col-xs-6">
+           <div>
+       <form class="form-horizontal">
+
+  <div class="form-group">
+   
+    <div class="col-sm-10 pull-right"> 
+      <input type="text" class="form-control " id="searchfiled" placeholder="Поиск...">
+    </div>
+  </div>
+
+  <div class="form-group"> 
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default pull-right">Найти</button>
+    </div>
+  </div>
+</form>
+
+     </div>
+
+  </div>
+
+
+
+<!--   <div class="col-xs-4 text-center" >
+         <h1><?= Html::encode($this->title) ?></h1>
+
+  </div> -->
+
+
+
+</div>
+
+
+
+
+
+
+
+ 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -31,6 +116,10 @@ $this->params['breadcrumbs'][] = $this->title;
      <?= Html::a('Сбросить кеш', ['flush'], ['class' => 'btn btn-success pull-right']) ?>
     
     </p>
+
+
+
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
