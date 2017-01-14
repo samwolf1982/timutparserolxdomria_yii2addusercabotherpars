@@ -7,14 +7,14 @@ use yii\widgets\Pjax;
 
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
-use frontend\models\Rooms;
+use frontend\models\Roomstoday;
 
 use kartik\sidenav\SideNav;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RoomsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = "Rooms";
+$this->title = "Roomstoday";
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -57,7 +57,7 @@ echo SideNav::widget([
             'items' => [
                 ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>Url::toRoute('roomstoday/index')],
                    ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
-                      ['label' => 'Нашы сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
+                      ['label' => 'Наши сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
                          ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>'#'],
                             ['label' => 'Первоисточник', 'icon'=>'info-sign', 'url'=>'#'],
                

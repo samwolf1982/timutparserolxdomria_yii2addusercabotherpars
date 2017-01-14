@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property integer $id_rooms
  * @property integer $id_coordinates
- *
  * @property Rooms $idRooms
  * @property Coordinates $idCoordinates
  */
