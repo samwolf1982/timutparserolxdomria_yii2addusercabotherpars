@@ -20,7 +20,7 @@ class RoomstodaySearch extends Roomstoday
     public function rules()
     {
         return [
-            [['id', 'site_id', 'price', 'price_m', 'count_rooms', 'square', 'floor', 'floors'], 'integer'],
+            [['id', 'site_id', 'price', 'price_m', 'count_rooms', 'square', 'floor', 'floors','sqare_total','sqare_kitchen','sqare_live',], 'integer'],
             [['shortdistrict', 'phone', 'currency', 'type', 'district', 'street', 'street2', 'description', 'state', 'material', 'own_or_business', 'manager', 'coment', 'url', 'site', 'img', 'date'], 'safe'],
         ];
     }

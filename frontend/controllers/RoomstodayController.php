@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Roomstoday;
+use common\models\UserSave;
 use frontend\models\RoomstodaySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -131,14 +132,26 @@ $floors = $db->cache(function ($db) {
              'material'=>$material,
              'site'=>$site,
              'state'=>$state,
+             // 'sqare_total'=>$sqare_total,
+             // 'sqare_live'=>$sqare_live,
+             // 'sqare_kitchen'=>$sqare_kitchen,
             // 'site_id'=>$site_id
-             
+     
             
         ]);
 
 
 
     }
+
+            public function actionFlush()
+    {
+       // $this->findModel($id)->delete();
+       Yii::$app->cache->flush();
+
+        return $this->redirect(['index']);
+    }
+
 
     /**
      * Displays a single Roomstoday model.
@@ -161,6 +174,11 @@ $floors = $db->cache(function ($db) {
     public function actionCreate()
     {
         $model = new Roomstoday();
+//1 проверка или уже сохранен   юзер - квартира
+
+        //2 если нет то тогда сохранить
+
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -180,8 +198,34 @@ $floors = $db->cache(function ($db) {
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model_user_save = new UserSave();
+
+        $is_pres=UserSave::findOne(['o_id'=>$model->id,'u_id'=>Yii::$app->user->identity->id]);
+
+        //\Yii::trace();
+        // wruite to db
+        if (is_null($is_pres)) {
+          $model_user_save->u_id=Yii::$app->user->identity->id; 
+          $model_user_save->o_id=$id;
+           
+           $model_user_save->validate();
+
+          if ($model_user_save->save()) {
+                 \Yii::trace('save ok');  
+            }  
+            else{
+                  \Yii::trace($model_user_save->errors); 
+            }
+                          
+        }
+
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+             //delete
+             return $this->render('update', [
+                'model' => $model,
+            ]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -202,6 +246,14 @@ $floors = $db->cache(function ($db) {
 
         return $this->redirect(['index']);
     }
+
+      public function actionDelfileinput()
+    {
+          $output=$_POST;
+        echo json_encode($output);
+      
+    }
+    
 
     /**
      * Finds the Roomstoday model based on its primary key value.

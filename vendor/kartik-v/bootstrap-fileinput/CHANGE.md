@@ -1,6 +1,30 @@
 Change Log: `bootstrap-fileinput`
 =================================
 
+## version 4.3.7
+
+**Date:** 17-Jan-2017
+
+1. (enh #812): Update Greek Translations.
+2. (enh #815): Enhance parsing of thumbnails that are visible in preview (will allow plugin to be 
+    initialized in hidden containers like tabs).
+3. (enh #816): New property `msgFileTypes` to control descriptions/localizations of file types displayed.
+4. (bug #819): Correct init preview auto replace post `uploadSingle` action in thumbnails.
+5. (enh #820): Prevent resize if image is smaller than allowed dimensions.
+6. (enh #822): Enhancement for preventing upload when data is empty. New property `msgUploadEmpty` has been incorporated.
+7. (enh #823): Correct file indices assignment during validation of images.
+8. (enh #824): Add Korean Translations.
+9. (bug #825): Correct `fileimagesresized` event triggering.
+10. (bug #826): Extend language configuration to consider defaults.
+11. (enh #828): Allow drag sort of single uploaded thumbnails with `initialPreview` config set (post upload).
+12. (enh #831): Update Finnish Translations.
+13. (bug #833): Correct validation and defaults init for `allowedPreviewTypes`.
+14. (bug #834): Correct clearing of file preview including zoom cache.
+15. (enh #835): Update Polish Translations.
+16. (enh #837): Update Czech Translations.
+17. (bug #839): Correct `initialPreview` generation and sortable behavior for async uploads.
+18. (enh #844): Display zoom preview navigation buttons only when multiple files exist.
+
 ## version 4.3.6
 
 **Date:** 17-Dec-2016

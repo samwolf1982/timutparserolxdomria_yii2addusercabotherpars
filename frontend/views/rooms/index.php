@@ -14,7 +14,7 @@ use kartik\sidenav\SideNav;
 /* @var $searchModel app\models\RoomsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = "Roomstoday";
+$this->title = "Лента";
 
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -56,8 +56,8 @@ echo SideNav::widget([
             'icon' => 'question-sign',
             'items' => [
                 ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>Url::toRoute('roomstoday/index')],
-                   ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
-                      ['label' => 'Наши сохраненные', 'icon'=>'info-sign', 'url'=>'#'],
+                   ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/index')],
+                      ['label' => 'Наши сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/oursave')],
                          ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>'#'],
                             ['label' => 'Первоисточник', 'icon'=>'info-sign', 'url'=>'#'],
                

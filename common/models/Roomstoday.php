@@ -32,6 +32,9 @@ use Yii;
  * @property string $site
  * @property string $img
  * @property string $date
+ * @property string $sqare_total
+ * @property string $sqare_live
+ * @property string $sqare_kitchen
  *
  * @property RoomsToCoordinates[] $roomsToCoordinates
  */
@@ -51,7 +54,7 @@ class Roomstoday extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'price_m', 'count_rooms', 'square', 'floor', 'floors','site_id'], 'integer'],
+            [['price', 'price_m', 'count_rooms', 'square', 'floor', 'floors','site_id','sqare_total','sqare_kitchen','sqare_live'], 'integer'],
             [['description', 'url', 'img','date'], 'string'],
             [['shortdistrict', 'phone', 'currency', 'type', 'district', 'street', 'street2', 'state', 'own_or_business', 'manager', 'coment', 'site', 'material'], 'string', 'max' => 255],
         ];
@@ -88,6 +91,10 @@ class Roomstoday extends \yii\db\ActiveRecord
             'material'=>'Материал',
             'site_id'=>'><Ид сайта',
             'street2'=>'Улица',
+            'sqare_total'=>'Общ. площадь',
+            'sqare_live'=>'Жил. площадь',
+            'sqare_kitchen'=>'Кух. площадь',
+
         ];
     }
 

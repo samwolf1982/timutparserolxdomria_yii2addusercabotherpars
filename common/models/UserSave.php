@@ -31,8 +31,8 @@ class UserSave extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['u_id', 'o_id', 'some'], 'required'],
-            [['u_id', 'o_id', 'some'], 'integer'],
+            [['u_id', 'o_id',], 'required'],
+            [['u_id', 'o_id', ], 'integer'],
             [['u_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['u_id' => 'id']],
             [['o_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rooms::className(), 'targetAttribute' => ['o_id' => 'id']],
         ];
