@@ -212,10 +212,13 @@ $img_arr_str="'";
 $img_arr_str.=implode($img_arr,"','");
  $img_arr_str.="'";
  $img_arr_keys_str_n=range(0, count($img_arr)-1);
- $img_arr_keys_str=implode($img_arr_keys_str_n,"},{ key:");
- $img_arr_keys_str_r="{ key:".$img_arr_keys_str."}";
+  $img_arr_keys_str=implode($img_arr_keys_str_n,"},{ key:");
+  $img_arr_keys_str_r="{ key:".$img_arr_keys_str."}";
+
+
 
 $del_url=Url::toRoute('roomstoday/delfileinput');
+$upload_url=Url::toRoute('roomstoday/upload');
 Yii::trace($del_url);
 $jsss=<<<EOT
 
@@ -233,28 +236,29 @@ $jsss=<<<EOT
         initialCaption: "Список фото",
         allowedFileTypes: ["image", "video"],
         maxFilePreviewSize: 50240,
-         uploadUrl: "http://localhost3/file-upload-single/1", // server upload action
+         uploadUrl: "$upload_url", // server upload action
     uploadAsync: true,
 
     });
 
 
-    $('#input-24').on('filedeleted', function(event, key) {
+    $('#input-24').on('filedeleted', function(event, key,data) {
       //$('#roomstoday-img').text();
 
      var arr=  jQuery.parseJSON( $('#roomstoday-img').text() );
-         
+       var dt= jQuery.parseJSON( data.responseText); 
 
-        console.log(event);
+
+        console.log('index: '+dt.index);
       //  delete arr[key];
-arr.splice(key, 1);
+arr.splice(dt.index, 1);
 
 console.log('len = ' + arr.length);
-           // if(arr.length==0){
-              $('#roomstoday-img').text();
-            //}else{
+            if(arr.length==0){
+              $('#roomstoday-img').text('');
+            }else{
                 $('#roomstoday-img').text(  JSON.stringify(arr));
-              //    }
+                  }
     console.log('zzKey = ' + key);
 });
 

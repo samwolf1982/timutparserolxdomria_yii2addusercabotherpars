@@ -5,12 +5,15 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Roomstoday;
 use common\models\UserSave;
+use common\models\UploadForm;
 use frontend\models\RoomstodaySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use yii\helpers\ArrayHelper;
+
+use yii\web\UploadedFile;
 /**
  * RoomstodayController implements the CRUD actions for Roomstoday model.
  */
@@ -250,7 +253,48 @@ $floors = $db->cache(function ($db) {
       public function actionDelfileinput()
     {
           $output=$_POST;
-        echo json_encode($output);
+        echo json_encode(['post'=>$output,'index'=>0]);
+      
+    }
+         public function actionUpload()
+    {
+          $output=$_POST;
+
+       if (Yii::$app->request->isPost) {
+                  
+              $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+
+                   //  $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+
+        //  files   
+           $tmp=$_FILES['img']['tmp_name'][0];
+           $nam=$_FILES['img']['name'][0];
+          move_uploaded_file($tmp, 'uploads/'.$nam);  
+       // if ($this->error == UPLOAD_ERR_OK) {
+            // if (false) {
+            //     return move_uploaded_file($this->tempName, $file);
+            // } elseif (is_uploaded_file($this->tempName)) {
+            //     return copy($this->tempName, $file);
+            // }
+     
+              //Yii::trace($model);
+           //  if ($model->upload()) {
+            //     // file is uploaded successfully
+            //     return;
+                    echo json_encode(['post'=>$tmp,'index'=>0,'res'=>'like ok','files'=>$_FILES,]); die();
+            // }
+              echo json_encode(['post'=>$output,'index'=>0,'res'=>'like bad','files'=>$_FILES]); die();
+        }
+
+       // return $this->render('upload', ['model' => $model]);
+        }
+
+
+          
+
+        echo json_encode(['post'=>$output,'index'=>0,'res'=>'like bad end','files'=>$_FILES]); die();
       
     }
     
