@@ -235,9 +235,7 @@ $floors = $db->cache(function ($db) {
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
              //delete
-             return $this->render('update', [
-                'model' => $model,
-            ]);
+             //return $this->render('update', ['model' => $model,]);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -284,8 +282,14 @@ $floors = $db->cache(function ($db) {
                    //  $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
         $u_id=Yii::$app->user->identity->id; 
         //  files   
-              $today=date("F-j-Y");                                                     
-              $structure = "uploads/{$today}/{$u_id}/{$id}/";
+              $today=date("F-j-Y");  
+              if($id>=0){
+                 $structure = "uploads/{$today}/{$u_id}/{$id}/";
+             } else{
+                     $dirname = uniqid();
+                 $structure = "uploads/{$today}/{$u_id}/create/{$dirname}/";
+             }                                                 
+             
 
 // To create the nested structure, the $recursive parameter 
 // to mkdir() must be specified.
@@ -308,8 +312,10 @@ for ($i=0; $i <count($_FILES['img2']['tmp_name']) ; $i++) {
 }
 
 
-           $f_path="http://{$_SERVER['HTTP_HOST']}/".Yii::getAlias('@frontend_web');
-                    echo json_encode(['post'=>$tmp,'index'=>0,'res'=>'like ok','files'=>$_FILES,'full_paths'=>$pull_paths]);
+           // $f_path="http://{$_SERVER['HTTP_HOST']}/".Yii::getAlias('@frontend_web');
+           //          echo json_encode(['post'=>$tmp,'index'=>0,'res'=>'like ok','files'=>$_FILES,'full_paths'=>$pull_paths]);
+ $f_path="http://{$_SERVER['HTTP_HOST']}/".Yii::getAlias('@frontend_web');
+                    echo json_encode(['res'=>'like ok','full_paths'=>$pull_paths]);
 die();
             // }
               echo json_encode(['post'=>$output,'index'=>0,'res'=>'like bad','files'=>$_FILES]); die();
