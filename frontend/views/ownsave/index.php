@@ -59,7 +59,7 @@ echo SideNav::widget([
                    ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/index')],
                       ['label' => 'Наши сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/oursave')],
                          ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/ownadd')],
-                         ['label' => 'Наши добавленные', 'icon'=>'info-sign', 'url'=>'#'],
+                         ['label' => 'Наши добавленные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/ouradd')],
                             ['label' => 'Первоисточник', 'icon'=>'info-sign', 'url'=>'#'],
                
             ],

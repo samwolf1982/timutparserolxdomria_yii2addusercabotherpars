@@ -39,7 +39,7 @@ class OwnsaveController extends Controller
     public function actionIndex()
     {
         $searchModel = new OwnsaveSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,-1);
 
            $db=Ownsave::getDb();
 $count_room = $db->cache(function ($db) {
@@ -145,7 +145,7 @@ $floors = $db->cache(function ($db) {
        public function actionOursave()
     {
         $searchModel = new OwnsaveSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,-1);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,0);
 
            $db=Ownsave::getDb();
 $count_room = $db->cache(function ($db) {
