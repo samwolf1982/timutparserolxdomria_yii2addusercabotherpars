@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
-use frontend\models\Roomstoday;
+use frontend\models\Rooms;
 
 use kartik\sidenav\SideNav;
 /* @var $this yii\web\View */
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <!-- Columns are always 50% wide, on mobile and desktop -->
 <div class="row">
-  <div class="col-xs-6">
+  <div class="col-xs-2">
            
          <?php
 echo SideNav::widget([
@@ -58,7 +58,8 @@ echo SideNav::widget([
                 ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>Url::toRoute('roomstoday/index')],
                    ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/index')],
                       ['label' => 'Наши сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/oursave')],
-                         ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>'#'],
+                         ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/ownadd')],
+                         ['label' => 'Наши добавленные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/ouradd')],
                             ['label' => 'Первоисточник', 'icon'=>'info-sign', 'url'=>'#'],
                
             ],
@@ -68,7 +69,7 @@ echo SideNav::widget([
 ?>
 
      </div>
-       <div class="col-xs-6">
+       <div class="col-xs-2">
            <div>
        <form class="form-horizontal">
 
@@ -87,6 +88,12 @@ echo SideNav::widget([
 </form>
 
      </div>
+
+  </div>
+
+
+         <div class="col-xs-8">
+
 
   </div>
 
@@ -111,9 +118,10 @@ echo SideNav::widget([
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Rooms', ['create'], ['class' => 'btn btn-success']) ?>
+     <?= Html::a('Сбросить кеш', ['flush'], ['class' => 'btn btn-success ']) ?>
+        <?= Html::a('Create Rooms', ['roomstoday/create'], ['class' => 'btn btn-success  pull-left']) ?>
     
-     <?= Html::a('Сбросить кеш', ['flush'], ['class' => 'btn btn-success pull-right']) ?>
+    
     
     </p>
 
@@ -195,7 +203,30 @@ echo SideNav::widget([
             
             
             
-              'date',
+  
+                                 [
+            'attribute'=> 'date', 
+            'class' => 'kartik\grid\DataColumn',
+            'noWrap' => false,
+
+              'value'=>function ($model, $key, $index, $widget) { 
+                //return  str_replace(' ', PHP_EOL, $model->date);
+                return $model->date;
+                            },
+            
+            'contentOptions' => 
+            ['style'=>'max-width: 350px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+           
+        
+            ],
+
+
+
             
             
                 [
@@ -210,7 +241,14 @@ echo SideNav::widget([
             'filterWidgetOptions'=>[
                 'pluginOptions'=>['allowClear'=>true],
             ],
-            'filterInputOptions'=>['placeholder'=>'Комнаты']
+            'filterInputOptions'=>['placeholder'=>'Комнаты'],
+             'contentOptions' => 
+            ['style'=>'max-width: 150px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
         ],
             
             
@@ -221,9 +259,11 @@ echo SideNav::widget([
              
                               [
             'attribute'=>'site', 
+            'format' => 'raw',
             'width'=>'250px',
             'value'=>function ($model, $key, $index, $widget) { 
-                return $model->site;
+                //return $model->site;
+              return Html::a($model->site,$model->url);
             },
             'filterType'=>GridView::FILTER_SELECT2,
    
@@ -238,13 +278,13 @@ echo SideNav::widget([
                                                                                     
                         
             
-           [
-           'label'=>'Ссылка',
-           'format' => 'raw',
-       'value'=>function ($data) {
-             return Html::a($data->site,$data->url);
-        },
-    ], 
+    //        [
+    //        'label'=>'Ссылка',
+    //        'format' => 'raw',
+    //    'value'=>function ($data) {
+    //          return Html::a($data->site,$data->url);
+    //     },
+    // ], 
                 
                  [
             'attribute'=>'shortdistrict', 
@@ -268,6 +308,11 @@ echo SideNav::widget([
             'attribute'=> 'phone', 
             'class' => 'kartik\grid\DataColumn',
             'noWrap' => false,
+
+              'value'=>function ($model, $key, $index, $widget) { 
+                return  str_replace('|', PHP_EOL, $model->phone);
+                
+            },
             
             'contentOptions' => 
             ['style'=>'max-width: 350px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
@@ -312,7 +357,15 @@ echo SideNav::widget([
             'filterWidgetOptions'=>[
                 'pluginOptions'=>['allowClear'=>true],
             ],
-            'filterInputOptions'=>['placeholder'=>'Материал']
+            'filterInputOptions'=>['placeholder'=>'Материал'],
+             'contentOptions' => 
+            ['style'=>'max-width: 250px;     max-height: 120px; overflow: auto; white-space: pre-wrap; /* css-3 */
+ white-space: -moz-pre-wrap; 
+ white-space: -pre-wrap; 
+ white-space: -o-pre-wrap; 
+ word-wrap: break-word; ']
+            ,
+
         ],
         
             
@@ -567,33 +620,35 @@ echo SideNav::widget([
  word-wrap: break-word; ']
             ,
             ],
+
             
-                                                          [
-            'attribute'=>'img', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
+ //             [
+ //            'attribute'=>'img', 
+ //            'class' => 'kartik\grid\DataColumn',
+ //            'noWrap' => false,
             
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: hidden; /* css-3 */
- white-space: -moz-pre-wrap; 
- white-space: -pre-wrap; 
- white-space: -o-pre-wrap; 
- word-wrap: break-word; ']
-            ,
-            ],
-                                                                      [
-            'attribute'=>'url', 
-            'class' => 'kartik\grid\DataColumn',
-            'noWrap' => false,
+ //            'contentOptions' => 
+ //            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: hidden; /* css-3 */
+ // white-space: -moz-pre-wrap; 
+ // white-space: -pre-wrap; 
+ // white-space: -o-pre-wrap; 
+ // word-wrap: break-word; ']
+ //            ,
+ //            ],
+
+ //            [
+ //            'attribute'=>'url', 
+ //            'class' => 'kartik\grid\DataColumn',
+ //            'noWrap' => false,
             
-            'contentOptions' => 
-            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: hidden; /* css-3 */
- white-space: -moz-pre-wrap; 
- white-space: -pre-wrap; 
- white-space: -o-pre-wrap; 
- word-wrap: break-word; ']
-            ,
-            ],                                    
+ //            'contentOptions' => 
+ //            ['style'=>'max-width: 50px;     max-height: 120px; width:50px; overflow: hidden; /* css-3 */
+ // white-space: -moz-pre-wrap; 
+ // white-space: -pre-wrap; 
+ // white-space: -o-pre-wrap; 
+ // word-wrap: break-word; ']
+ //            ,
+ //            ],                                    
     
             
             
@@ -605,7 +660,8 @@ echo SideNav::widget([
 
 </div>
 <style>
-.container{
-    width: 99%
+.container, .grid-view.hide-resize{
+    width: 180%
 }
+
 </style>

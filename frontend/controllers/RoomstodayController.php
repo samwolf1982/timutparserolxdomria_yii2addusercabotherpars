@@ -178,12 +178,24 @@ $floors = $db->cache(function ($db) {
     {
         $model = new Roomstoday();
 //1 проверка или уже сохранен   юзер - квартира
-
         //2 если нет то тогда сохранить
 
 
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+             $model_user_save = new UserSave();
+             $model_user_save->u_id=Yii::$app->user->identity->id; 
+          $model_user_save->o_id=$model->id;
+          $model_user_save->some=1; // для пометки что сообственное
+           $model_user_save->validate();
+
+          if ($model_user_save->save()) {
+                 \Yii::trace('save ok');  
+            }  
+            else{
+                  \Yii::trace($model_user_save->errors); 
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

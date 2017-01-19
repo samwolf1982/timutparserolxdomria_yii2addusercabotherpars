@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\Roomstoday */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Roomstodays', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Лента', 'url' => ['rooms/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="roomstoday-view">

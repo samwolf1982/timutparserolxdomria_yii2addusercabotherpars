@@ -37,18 +37,28 @@ class OwnsaveSearch extends Ownsave
     /**
      * Creates data provider instance with search query applied
      *
+     *  is_own < 0 -->my save,   0--> all save,   ==1 --> own add  2--> ouradd 
      * @param array $params
      *
+     * @param  int is_own  
      * @return ActiveDataProvider
      */
-    public function search($params,$is_own=true)
+    public function search($params,$is_own=0)
     {
-
-        if ($is_own) {
+        
+          
+        if ($is_own < 0) {
           $query = Ownsave::find()->joinWith('userSaves')->where(['u_id' => Yii::$app->user->identity->id]);
-        }else{
+        }elseif($is_own==0){
         $query = Ownsave::find()->innerJoinWith('userSaves','userSaves.o_id=id')->where(1);
-             }
+        }elseif ($is_own==1) {
+          // $query = Ownsave::find()->innerJoinWith('userSaves','userSaves.o_id=id')->where(['userSaves.some'=>1]);
+          $query = Ownsave::find()->joinWith('userSaves')->where(['u_id' => Yii::$app->user->identity->id,'some'=>1]);
+        }
+        elseif ($is_own==2) {
+          // $query = Ownsave::find()->innerJoinWith('userSaves','userSaves.o_id=id')->where(['userSaves.some'=>1]);
+          $query = Ownsave::find()->joinWith('userSaves')->where(['some'=>1]);
+        }
     //      Customer::find()
     // ->joinWith('orders')
     // ->where(['order.status' => Order::STATUS_ACTIVE])

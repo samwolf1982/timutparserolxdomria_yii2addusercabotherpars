@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Roomstoday */
 
-$this->title = 'Create Roomstoday';
-$this->params['breadcrumbs'][] = ['label' => 'Roomstodays', 'url' => ['index']];
+$this->title = 'Создать';
+$this->params['breadcrumbs'][] = ['label' => 'Лента', 'url' => ['rooms/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="roomstoday-create">

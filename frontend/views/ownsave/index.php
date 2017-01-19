@@ -58,7 +58,8 @@ echo SideNav::widget([
                 ['label' => 'Новые за сегодня', 'icon'=>'info-sign', 'url'=>Url::toRoute('roomstoday/index')],
                    ['label' => 'Мои сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/index')],
                       ['label' => 'Наши сохраненные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/oursave')],
-                         ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>'#'],
+                         ['label' => 'Мои добавленные', 'icon'=>'info-sign', 'url'=>Url::toRoute('ownsave/ownadd')],
+                         ['label' => 'Наши добавленные', 'icon'=>'info-sign', 'url'=>'#'],
                             ['label' => 'Первоисточник', 'icon'=>'info-sign', 'url'=>'#'],
                
             ],
@@ -116,9 +117,9 @@ echo SideNav::widget([
  
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
+     <p>
      <?= Html::a('Сбросить кеш', ['flush'], ['class' => 'btn btn-success ']) ?>
-        <?= Html::a('Create Rooms', ['create'], ['class' => 'btn btn-success  pull-left']) ?>
+        <?= Html::a('Create Rooms', ['roomstoday/create'], ['class' => 'btn btn-success  pull-left']) ?>
     
     
     
