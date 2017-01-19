@@ -204,7 +204,7 @@ foreach ($keys as $k => $v) {
 
 ?>
 <label class="control-label">Planets and Satellites</label>
-<input id="input-24" name="img[]" type="file" multiple class="file-loading">
+<input id="input-24" name="img2[]" type="file" multiple class="file-loading">
 <?php
 
 
@@ -212,13 +212,15 @@ $img_arr_str="'";
 $img_arr_str.=implode($img_arr,"','");
  $img_arr_str.="'";
  $img_arr_keys_str_n=range(0, count($img_arr)-1);
+
+  
   $img_arr_keys_str=implode($img_arr_keys_str_n,"},{ key:");
   $img_arr_keys_str_r="{ key:".$img_arr_keys_str."}";
 
 
 
-$del_url=Url::toRoute('roomstoday/delfileinput');
-$upload_url=Url::toRoute('roomstoday/upload');
+$del_url=Url::toRoute(['roomstoday/delfileinput','id'=>$model->id]);
+$upload_url=Url::toRoute(["roomstoday/upload",'id'=>$model->id]);
 Yii::trace($del_url);
 $jsss=<<<EOT
 
@@ -242,16 +244,37 @@ $jsss=<<<EOT
     });
 
 
+$('#input-24').on('filepredelete', function(event, key,data) {
+    console.log('Key = ' + key);
+     var arr=  jQuery.parseJSON( $('#roomstoday-img').text());
+      // var dt= jQuery.parseJSON( data.responseText);
+       console.log(data);
+});
+
+
+
+
     $('#input-24').on('filedeleted', function(event, key,data) {
       //$('#roomstoday-img').text();
 
-     var arr=  jQuery.parseJSON( $('#roomstoday-img').text() );
-       var dt= jQuery.parseJSON( data.responseText); 
+     var arr=  jQuery.parseJSON( $('#roomstoday-img').text());
+     var dt= jQuery.parseJSON( data.responseText); 
+
+var search_index=0;
+     $.each(arr,function( index, el ) {
+          if(el==dt.img){
+            console.log('find!!');
+            search_index=index;
+            return;
+          }
+  });
+
+    
 
 
-        console.log('index: '+dt.index);
+       
       //  delete arr[key];
-arr.splice(dt.index, 1);
+arr.splice(search_index, 1);
 
 console.log('len = ' + arr.length);
             if(arr.length==0){
@@ -260,6 +283,29 @@ console.log('len = ' + arr.length);
                 $('#roomstoday-img').text(  JSON.stringify(arr));
                   }
     console.log('zzKey = ' + key);
+});
+
+// upload
+$('#input-24').on('fileuploaded', function(event, data, previewId, index) {
+    var form = data.form, files = data.files, extra = data.extra,
+        response = data.response, reader = data.reader;
+ var arr=  jQuery.parseJSON( $('#roomstoday-img').text());
+ // console.log(data.response.full_path);
+ //var dt= jQuery.parseJSON(data); 
+
+
+ //arr.push(dt.full_path);
+
+console.log(data);
+ $.each(data.response.full_paths,function( index, element ) {
+   arr.push(element);
+  });
+
+
+
+ $('#roomstoday-img').text( JSON.stringify(arr));
+
+    console.log('File uploaded triggered');
 });
 
 EOT;
@@ -272,82 +318,7 @@ $this->registerJs($jsss
 
 
 ?>
-<?php
 
-
-// echo '<label class="control-label">Add Attachments</label>';
-// echo FileInput::widget([
-//     'model' => $model,
-//     'attribute' => 'img',
-//     'options' => ['multiple' => true]
-// ]);
-// echo $form->field($model, 'img')->widget(FileInput::classname(), [
-//     'options' => ['accept' => 'image/*'],
-// ]);
-
-// echo FileInput::widget([
-//     'name' => 'attachment_48[]',
-//     'options'=>[
-//         'multiple'=>true,
-//         'id' => 'my-file-input-0',
-        
-//     ],
-//     'pluginOptions' => [
-//         'uploadUrl' => Url::to(['/site/file-upload']),
-  
-//         ' overwriteInitial'=> false,
-//          'initialPreviewFileType'=> 'image',
-//         'initialPreview'=>$img_arr
-//         ,'append' => true,
-//         'maxFileCount' => 10,
-//         'initialPreviewAsData'=>true,
-
-//     ]
-// ]);
-
-// Display an initial preview of files with caption 
-// (useful in UPDATE scenarios). Set overwrite `initialPreview`
-// to `false` to append uploaded images to the initial preview.
-// echo FileInput::widget([
-//     'name' => 'attachment_49[]',
-//     'options'=>[
-//         'multiple'=>true
-//     ],
-//     'initialPreview'=>false,
-//     'pluginOptions' => [
-//         'initialPreview'=>[
-//             "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg",
-//             "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/600px-Earth_Eastern_Hemisphere.jpg"
-//         ],
-//         'initialPreviewAsData'=>true,
-//         'initialCaption'=>"The Moon and the Earth",
-//         'initialPreviewConfig' => [
-//             ['caption' => 'Moon.jpg', 'size' => '873727'],
-//             ['caption' => 'Earth.jpg', 'size' => '1287883'],
-//         ],
-//         'overwriteInitial'=>false,
-//         'maxFileSize'=>2800
-//     ]
-// ]);
-// echo FileInput::widget([
-//     'name' => 'url[]',
-//     'options'=>[
-//         'multiple'=>true
-//     ],
-//     'pluginOptions' => [
-       
-//       'initialPreview'=>$img_arr,
-//         'initialPreviewAsData'=>true,
-//           'initialPreviewConfig' => $arr_captions,
-//         'initialCaption'=>"The Moon and the Earth",
-       
-//         'overwriteInitial'=>true,
-//         'maxFileSize'=>2800
-//     ]
-// ]);
-
-
-?>
     <?=  $form->field($model, 'img')->textarea(['rows' => 6]) ?>
 
       <?php

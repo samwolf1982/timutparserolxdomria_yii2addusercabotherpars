@@ -222,7 +222,16 @@ $floors = $db->cache(function ($db) {
                           
         }
 
+        
+        //      Yii::trace($model->attributes() ); 
+        // $atr= $model->getAttribute('phone');  
+        //      Yii::trace($model->getAttribute('phone') );
+        //      $model->setAttribute('phone',123);
+        //      $model->phone="987";
+          
+        //       $model->validate();
 
+        //      Yii::trace($model->getAttribute('phone') );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
              //delete
@@ -250,13 +259,19 @@ $floors = $db->cache(function ($db) {
         return $this->redirect(['index']);
     }
 
-      public function actionDelfileinput()
+      public function actionDelfileinput($id)
     {
           $output=$_POST;
-        echo json_encode(['post'=>$output,'index'=>0]);
+          $model= $this->findModel($id);
+           
+          $js= json_decode($model->img,true);
+              
+//          $model->img;
+
+        echo json_encode(['post'=>$output,'index'=>0,'img'=>$js[$_POST['key']]]);
       
     }
-         public function actionUpload()
+         public function actionUpload($id)
     {
           $output=$_POST;
 
@@ -267,23 +282,35 @@ $floors = $db->cache(function ($db) {
         if (Yii::$app->request->isPost) {
 
                    //  $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-
+        $u_id=Yii::$app->user->identity->id; 
         //  files   
-           $tmp=$_FILES['img']['tmp_name'][0];
-           $nam=$_FILES['img']['name'][0];
-          move_uploaded_file($tmp, 'uploads/'.$nam);  
-       // if ($this->error == UPLOAD_ERR_OK) {
-            // if (false) {
-            //     return move_uploaded_file($this->tempName, $file);
-            // } elseif (is_uploaded_file($this->tempName)) {
-            //     return copy($this->tempName, $file);
-            // }
-     
-              //Yii::trace($model);
-           //  if ($model->upload()) {
-            //     // file is uploaded successfully
-            //     return;
-                    echo json_encode(['post'=>$tmp,'index'=>0,'res'=>'like ok','files'=>$_FILES,]); die();
+              $today=date("F-j-Y");                                                     
+              $structure = "uploads/{$today}/{$u_id}/{$id}/";
+
+// To create the nested structure, the $recursive parameter 
+// to mkdir() must be specified.
+
+     if (!file_exists($structure)) {
+  if (!mkdir($structure, 0777, true)) {
+     Yii::trace('Failed to create folders... line: '.__LINE__);
+    
+}
+}         
+
+$pull_paths=[];
+for ($i=0; $i <count($_FILES['img2']['tmp_name']) ; $i++) { 
+           $tmp=$_FILES['img2']['tmp_name'][$i];
+           $nam=$_FILES['img2']['name'][$i];
+           move_uploaded_file($tmp, $structure.$nam);   
+         $f_path="http://{$_SERVER['HTTP_HOST']}/".Yii::getAlias('@frontend_web');
+         $pull_paths[]= $f_path.'/'.$structure.$nam;
+                     
+}
+
+
+           $f_path="http://{$_SERVER['HTTP_HOST']}/".Yii::getAlias('@frontend_web');
+                    echo json_encode(['post'=>$tmp,'index'=>0,'res'=>'like ok','files'=>$_FILES,'full_paths'=>$pull_paths]);
+die();
             // }
               echo json_encode(['post'=>$output,'index'=>0,'res'=>'like bad','files'=>$_FILES]); die();
         }
