@@ -32,6 +32,25 @@ class RoomsController extends Controller
         ];
     }
 
+
+
+
+    //         /**
+    //  * Displays a single Rooms model.
+    //  * @param integer $id
+    //  * @return mixed
+    //  */
+    // public function actionUpload($id)
+    // {
+    //   header('Access-Control-Allow-Origin: *');
+    //     header('Content-Type: application/json');
+    //     $item = array('id' => '98765');
+
+         
+    //     return json_encode($item, JSON_UNESCAPED_UNICODE);
+       
+    // }
+
   /**
      * Lists all Rooms models.
      * @return mixed
@@ -154,6 +173,17 @@ $floors = $db->cache(function ($db) {
         ]);
     }
     
+    //       public function actionFlush()
+    // {
+    //    // $this->findModel($id)->delete();
+    //    Yii::$app->cache->flush();
+
+    //     return $this->redirect(['index']);
+    // }
+
+
+
+    
           public function actionFlush()
     {
        // $this->findModel($id)->delete();
@@ -161,6 +191,10 @@ $floors = $db->cache(function ($db) {
 
         return $this->redirect(['index']);
     }
+
+
+
+
 
     /**
      * Creates a new Rooms model.

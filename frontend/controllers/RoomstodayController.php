@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\models\Roomstoday;
+use common\models\Rooms;
 use common\models\UserSave;
 use common\models\UploadForm;
 use frontend\models\RoomstodaySearch;
@@ -14,11 +15,13 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 
 use yii\web\UploadedFile;
+use yii\web\Response;
 /**
  * RoomstodayController implements the CRUD actions for Roomstoday model.
  */
 class RoomstodayController extends Controller
 {
+    
     /**
      * @inheritdoc
      */
@@ -27,12 +30,62 @@ class RoomstodayController extends Controller
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
+  
+
                 'actions' => [
                     'delete' => ['POST'],
+                    'uploading' => ['GET', 'POST', 'PUT'],
+                    //'*' => ['GET', 'POST', 'PUT'],
                 ],
             ],
         ];
-    }
+
+
+    //       return [
+    //     'verbs' => [
+    //         'class' => VerbFilter::className(),
+    //         'actions' => [
+    //             'index'  => ['get', 'put', 'post'],
+    //             'view'   => ['get', 'put', 'post'],
+    //             'create' => ['get', 'put', 'post'],
+    //             'update' => ['get', 'put', 'post'],
+    //             'uploading' => ['get', 'put', 'post'],
+    //             'delete' => ['get', 'put', 'post'],
+    //               '*' => ['get', 'put', 'post'],
+    //         ]
+
+      //  ,
+    //     ],
+    // ];
+   // }
+
+
+//     protected function verbs()
+// {
+//       return [
+//             'verbs' => [
+//                 'class' => VerbFilter::className(),
+//                 'actions' => [
+//                     'delete' => ['POST'],
+//                     'uploading' => ['GET', 'POST', 'PUT'],
+//                     '*' => ['GET', 'POST', 'PUT'],
+//                 ],
+//             ],
+//         ];
+}
+
+
+ public function actionPut()
+        {
+              $request = Yii::$app->request;
+      if ($request->isPut) {
+             return json_encode( ['result'=>'PUTT22'], JSON_UNESCAPED_UNICODE);;
+      }else {
+         return json_encode( ['result'=>'Not put'], JSON_UNESCAPED_UNICODE);;    
+      }
+        }
+
+
 
     /**
      * Lists all Roomstoday models.
@@ -146,6 +199,12 @@ $floors = $db->cache(function ($db) {
 
 
     }
+
+
+   
+
+
+
 
             public function actionFlush()
     {
